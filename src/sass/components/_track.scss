@@ -1,0 +1,295 @@
+.playlists.skeleton {
+  .info {
+    width: 200px;
+  }
+  .image-container,
+  .title,
+  .desc,
+  .more-info,
+  .play-btn,
+  .btn-love {
+    border-radius: 6px;
+    animation: skeleton-animation 1s linear infinite alternate;
+    height: 17px;
+    @keyframes skeleton-animation {
+      0% {
+        background-color: let(bg);
+      }
+
+      100% {
+        background-color: let(bg-400);
+      }
+    }
+  }
+  .title {
+    margin-top: 10px;
+  }
+  .desc {
+    width: 60%;
+  }
+  .more-info {
+    width: 100%;
+    margin-top: 5px !important;
+  }
+  .bottom-info {
+    margin-top: 15px !important;
+  }
+  .btn-love {
+    border: 0px !important;
+    width: 32px;
+    height: 32px;
+    padding: 0px !important;
+  }
+  .play-btn {
+    padding: 16px 50px !important;
+    border-radius: 20px !important;
+  }
+}
+.playlists {
+  position: relative;
+  margin-top: -75px;
+  // height: 1000px;
+  min-height: 600px;
+
+  &-bg {
+    // background-image: url('../images/bunner/travis scott bunner.png');
+    background-position: left center;
+    background-blend-mode: darken;
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%, 0 69%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 300px;
+    width: 100%;
+    z-index: -1;
+  }
+
+  .main-empty-bg {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(
+      0deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(69, 69, 69, 1) 100%
+    );
+  }
+
+  .main {
+    padding: 100px 50px 30px 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+    background: #181a1d1f;
+
+    .image-container {
+      background-color: let(bg);
+      // background-color: let(secendery);
+      display: grid;
+      place-items: center;
+      width: 210px;
+      height: 225px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 1px 5px 10px 1px #0000002c;
+
+      svg {
+        font-size: 100px;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .main-title {
+      .title {
+        font-size: 32px;
+        color: white;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .more-info {
+    a {
+      padding: 8px;
+      font-size: 14px;
+      text-transform: lowercase;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    a:first-child {
+      padding-left: 0px;
+    }
+
+    .web-url > a {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+    }
+  }
+
+  .bottom-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    .btn.play-btn {
+      //   @extend %btn-secondary-lg;
+    }
+
+    .btn-love,
+    .btn-search,
+    .more {
+      box-sizing: content-box;
+      padding: 12px;
+      border: 1px solid rgb(216, 216, 216);
+      border-radius: 100%;
+      cursor: pointer;
+      display: flex;
+    }
+  }
+
+  article.msg {
+    width: 100%;
+    height: 50vh;
+
+    .article-container {
+      display: grid;
+      place-items: center;
+      gap: 20px;
+      font-size: 20px;
+
+      p {
+        font-size: 16px;
+      }
+    }
+  }
+}
+.box {
+  // display: flex;
+  // -webkit-box-orient: horizontal;
+  // -webkit-box-direction: normal;
+  // -ms-flex-direction: row;
+  // flex-direction: row;
+  // -webkit-box-align: center;
+  // -ms-flex-align: center;
+  // align-items: center;
+  // -webkit-box-pack: justify;
+  // -ms-flex-pack: justify;
+  // justify-content: space-between;
+  // border-bottom: 1px solid var(--border-clr);
+  // border-top: 1px solid transparent;
+  // padding: 9px 15px;
+  // cursor: pointer;
+  // gap: 25px;
+  justify-content: flex-start;
+  gap: 10px;
+
+  svg {
+    box-sizing: content-box;
+    padding: 5px;
+  }
+
+  .content {
+    flex-grow: 1;
+
+    span {
+      //   text-align: center;
+      flex-basis: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.box.title {
+  font-weight: 300;
+  //   color: $gray-500;
+  // padding-left: 42px !important;
+  cursor: default !important;
+
+  &:hover {
+    background-color: let(bg) !important;
+  }
+  > span {
+    visibility: hidden;
+  }
+
+  .content {
+    span {
+      //   flex-basis: 100px;
+      font-weight: 400 !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.more {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    display: flex;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  ul.inner-more {
+    position: absolute;
+    z-index: 5;
+    padding: 5px;
+    top: -87px;
+    right: -116px;
+    display: flex;
+    flex-direction: column;
+    background: let(bg);
+    border-radius: 7px;
+    font-size: 14px;
+    border: 1px solid #302f2f7d;
+    box-shadow: 3px 4px 7px 1px #141414;
+
+    a {
+      padding: 5px 10px;
+      display: block;
+
+      &:hover {
+        color: let(text-hover);
+      }
+    }
+
+    svg {
+      position: absolute;
+      right: 3px;
+      bottom: 3px;
+      pointer-events: none;
+      color: blue !important;
+      margin: 0px;
+      // visibility: hidden;
+    }
+  }
+}

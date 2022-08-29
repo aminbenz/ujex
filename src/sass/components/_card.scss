@@ -1,0 +1,128 @@
+.card {
+  display: grid;
+  align-content: start;
+  justify-self: center;
+  background-color: let(bg-200);
+  border-radius: let(radius);
+  padding: 10px 10px 20px 10px;
+  min-height: 230px;
+  max-width: 200px;
+  // box-shadow: 1px 1px 3px 0px #06060659;
+  &:hover {
+    background-color: let(bg-400);
+  }
+
+  .image-container {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .card-info {
+    position: relative;
+
+    .title {
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      margin: 5px 0;
+      cursor: pointer;
+      display: block;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .description {
+      font-size: 14px;
+      color: let(gray);
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      // opacity: 0.8;
+      // word-break: break-all;
+    }
+
+    .more {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      button {
+        width: 20px;
+        height: 20px;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(53, 53, 53, 0.349);
+        }
+      }
+
+      ul.inner-more {
+        visibility: hidden;
+        position: absolute;
+        z-index: 5;
+        top: -65px;
+        right: -110px;
+        display: flex;
+        flex-direction: column;
+        background: #0e0e0e;
+        border-radius: 7px;
+        font-size: 14px;
+        box-shadow: 3px 4px 7px 1px #141414;
+
+        li {
+          padding: 5px 15px;
+          &:hover {
+            color: let(text-hover);
+          }
+        }
+      }
+    }
+
+    svg {
+      position: absolute;
+      right: 3px;
+      bottom: 3px;
+      pointer-events: none;
+      color: let(text);
+      // visibility: hidden;
+    }
+  }
+}
+
+.card-items.grid-res {
+  height: 210px;
+  overflow: hidden;
+
+  .card-item {
+    // max-width: 165px;
+  }
+}
+
+.card-items.flex {
+  display: flex !important;
+  flex-wrap: wrap;
+
+  .card-item {
+    flex-basis: 170px;
+  }
+}

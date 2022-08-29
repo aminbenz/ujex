@@ -1,0 +1,279 @@
+//padding: 8px;
+// border-radius: 10px;
+@use 'sass:math';
+
+//create buttons
+//-------------- mixin
+@mixin btn($bg: let(primary)) {
+  background-color: $bg;
+}
+
+$utilities: (
+  'padding': (
+    'prefix': 'p',
+    'values': (
+      '0': 0,
+      '1': $base-padding,
+      '2': $base-padding * 2,
+      '3': $base-padding * 4,
+      '4': $base-padding * 6,
+      '5': $base-padding * 8,
+    ),
+  ),
+  'padding-left': (
+    'prefix': 'pl',
+    'values': (
+      '0': 0,
+      '1': $base-padding,
+      '2': $base-padding * 2,
+      '3': $base-padding * 4,
+      '4': $base-padding * 6,
+      '5': $base-padding * 8,
+    ),
+  ),
+  'padding-right': (
+    'prefix': 'pr',
+    'values': (
+      '0': 0,
+      '1': $base-padding,
+      '2': $base-padding * 2,
+      '3': $base-padding * 4,
+      '4': $base-padding * 6,
+      '5': $base-padding * 8,
+    ),
+  ),
+  'padding-top': (
+    'prefix': 'pt',
+    'values': (
+      '0': 0,
+      '1': $base-padding,
+      '2': $base-padding * 2,
+      '3': $base-padding * 4,
+      '4': $base-padding * 6,
+      '5': $base-padding * 8,
+    ),
+  ),
+  'padding-bottom': (
+    'prefix': 'pb',
+    'values': (
+      '0': 0,
+      '1': $base-padding,
+      '2': $base-padding * 2,
+      '3': $base-padding * 4,
+      '4': $base-padding * 6,
+      '5': $base-padding * 8,
+    ),
+  ),
+  'margin': (
+    'prefix': 'm',
+    'values': (
+      '0': 0,
+      '1': $base-margin,
+      '2': $base-margin * 2,
+      '3': $base-margin * 4,
+      '4': $base-margin * 6,
+      '5': $base-margin * 8,
+    ),
+  ),
+  'margin-left': (
+    'prefix': 'ml',
+    'values': (
+      '0': 0,
+      '1': $base-margin,
+      '2': $base-margin * 2,
+      '3': $base-margin * 4,
+      '4': $base-margin * 6,
+      '5': $base-margin * 8,
+    ),
+  ),
+  'margin-right': (
+    'prefix': 'mr',
+    'values': (
+      '0': 0,
+      '1': $base-margin,
+      '2': $base-margin * 2,
+      '3': $base-margin * 4,
+      '4': $base-margin * 6,
+      '5': $base-margin * 8,
+    ),
+  ),
+  'margin-top': (
+    'prefix': 'mt',
+    'values': (
+      '0': 0,
+      '1': $base-margin,
+      '2': $base-margin * 2,
+      '3': $base-margin * 4,
+      '4': $base-margin * 6,
+      '5': $base-margin * 8,
+    ),
+  ),
+  'margin-bottom': (
+    'prefix': 'mb',
+    'values': (
+      '0': 0,
+      '1': $base-margin,
+      '2': $base-margin * 2,
+      '3': $base-margin * 4,
+      '4': $base-margin * 6,
+      '5': $base-margin * 8,
+    ),
+  ),
+  'opacity': (
+    'prefix': 'o',
+    'values': (
+      '10': 0.1,
+      '20': 0.2,
+      '30': 0.3,
+      '40': 0.4,
+      '50': 0.5,
+      '60': 0.6,
+      '70': 0.7,
+      '80': 0.8,
+      '90': 0.9,
+      '100': 1,
+    ),
+  ),
+  'border-radius': (
+    'prefix': 'br',
+    'values': (
+      'default': $base-border-radius,
+      'none': 0,
+      'xs': math.div($base-border-radius, 4),
+      'sm': math.div($base-border-radius, 2),
+      'md': math.div($base-border-radius, 1),
+      'lg': $base-border-radius * 2,
+      'full': 50%,
+    ),
+  ),
+  'display': (
+    'prefix': 'display',
+    'values': (
+      'n': none,
+      'b': block,
+      'f': flex,
+      'i': inline,
+      'i-b': inline-block,
+    ),
+  ),
+  'font-size': (
+    'prefix': 'font',
+    'values': (
+      'sm': $font-size-sm,
+      'md': $base-font-size,
+      'lg': $font-size-lg,
+      'xl': $font-size-xl,
+      'xxl': $font-size-xxl,
+    ),
+  ),
+);
+
+// generate utility classes @each $property,
+@each $property, $map in $utilities {
+  $prefix: map-get($map, 'prefix');
+  $values: map-get($map, 'values');
+
+  @each $k, $v in $values {
+    @if ($k == 'default') {
+      .#{$prefix} {
+        #{$property}: $v !important;
+      }
+    } @else {
+      .#{$prefix}-#{$k} {
+        #{$property}: $v !important;
+      }
+    }
+  }
+}
+
+.container {
+  // width: 100%;
+  // max-width: 1200px;
+  // margin: 0 auto;
+  // padding: 0 20px;
+  //old
+  width: 95%;
+  margin: auto;
+  padding: 1.8%;
+}
+
+.box {
+  padding: 10px;
+  border-radius: let(radius);
+  display: flex;
+  justify-content: center;
+}
+
+// .container {
+//   width: 95%;
+//   margin: auto;
+// }
+
+.title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.section-title {
+  // font-family: 'Poppins', -apple-system, system-ui, BlinkMacSystemFont,
+  //   'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+  //   sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin: 20px 0;
+  border-bottom: 1px solid let(border);
+
+  .title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+  }
+
+  a {
+    font-size: 13px;
+
+    span {
+      font-weight: 500;
+      color: let(primary);
+    }
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  .title {
+    flex-grow: 1;
+    color: var(text);
+    text-align: center;
+    font-size: 17px;
+    letter-spacing: 0.2px;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 50%;
+  box-sizing: content-box;
+  svg {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+}
+
+span > svg {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}

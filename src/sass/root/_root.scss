@@ -1,0 +1,23 @@
+// create root colors using map
+
+:root {
+  color-scheme: light dark;
+  @each $key, $value in $root_colors {
+    --#{$key}: #{$value};
+  }
+  @each $key, $value in $radius {
+    --radius-#{$key}: #{$value};
+  }
+}
+// create colors with shades (gradiant)
+:root {
+  @each $key, $values in $colors_k {
+    @each $k, $shade in $values {
+      @if ($k == 'base') {
+        --#{$key}: #{$shade};
+      } @else {
+        --#{$key}-#{$k}: #{$shade};
+      }
+    }
+  }
+}
