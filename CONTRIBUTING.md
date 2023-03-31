@@ -928,7 +928,7 @@ Next I am going to make a style module file that lives next to the component. By
   min-height: 230px;
   max-width: 190px;
   &:hover {
-    background-color: let(bg-400);
+    background-color: let(bg-200);
   }
 
   .image-container {
@@ -966,7 +966,7 @@ Next I am going to make a style module file that lives next to the component. By
 
     .description {
       font-size: 14px;
-      color: let(gray);
+      color: let(mute);
       display: -webkit-box;
       overflow: hidden;
       -webkit-line-clamp: 2;

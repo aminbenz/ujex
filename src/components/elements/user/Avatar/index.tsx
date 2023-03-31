@@ -1,23 +1,32 @@
-// react
-import { useState } from 'react';
-// next
+'use client';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-// animation
-import { AnimatePresence, motion } from 'framer-motion';
-// components
+import { useState } from 'react';
 import { SwitchColor, Switcher } from '../../../../theme';
 
 interface UserProps {
-  username?: string;
-  display_name?: string;
+  id: string;
+  name: string;
+  description?: string;
   avatar?: any;
+  width?: number | string;
+  style?: React.CSSProperties;
 }
 
-export const Avatar = ({ username, display_name, avatar }: UserProps) => {
+export const Avatar = ({ name, avatar, id, width, style }: UserProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const styles = {
+    ...style,
+    width,
+  };
+
   return (
-    <div className="user" onClick={() => setIsOpen((prev) => !prev)}>
+    <div
+      style={styles}
+      className="user"
+      onClick={() => setIsOpen((prev) => !prev)}
+    >
       <div className="avatar">
         {
           <Image
@@ -32,8 +41,8 @@ export const Avatar = ({ username, display_name, avatar }: UserProps) => {
           />
         }
       </div>
-      <span className="username">{display_name || username}</span>
-      <AnimatePresence exitBeforeEnter={true}>
+      <span className="username">{name}</span>
+      <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -100 }}
@@ -49,8 +58,8 @@ export const Avatar = ({ username, display_name, avatar }: UserProps) => {
           >
             <ul>
               <li>
-                <Link href="/user" className="link">
-                  my acount
+                <Link href={`/user/${id}`} className="link">
+                  my account
                 </Link>
               </li>
               <li>

@@ -1,10 +1,22 @@
 import { useEffect, useState } from 'react';
-import './styles.css';
+import switcherCSS  from './Switcher.module.css';
 
 const defaultColor = '#006afe';
+const COLOR_PALETTE = [
+  '#842ce9 ',
+  '#4946ff ',
+  '#006afe ',
+  '#36c991 ',
+  '#d14bec ',
+  '#d572ab ',
+  '#F46036 ',
+  '#E3D888 ',
+  '#bf8e80 ',
+  '#5d8985 ',
+];
 
 export const SwitchColor: React.FC = () => {
-  const [appThemeColor, setAppColorTheme] = useState<string>(defaultColor);
+  const [themeColor, setAppColorTheme] = useState<string>(defaultColor);
 
   const handleSwitchThemeColor = (color: string) => {
     setAppColorTheme(color);
@@ -12,11 +24,11 @@ export const SwitchColor: React.FC = () => {
 
   //track color
   useEffect(() => {
-    if (appThemeColor) {
-      document.documentElement.style.setProperty('--primary', appThemeColor);
-      // window.localStorage.setItem('appThemeColor', appThemeColor);
+    if (themeColor) {
+      document.documentElement.style.setProperty('--primary', themeColor);
+      window.localStorage.setItem('theme_color', themeColor);
     }
-  }, [appThemeColor]);
+  }, [themeColor]);
 
   return (
     <>
@@ -25,22 +37,16 @@ export const SwitchColor: React.FC = () => {
       </label>
       <input
         type="color"
-        list="presetColors"
+        list="color-palette"
         id="input-color"
-        value={appThemeColor}
+        className={switcherCSS.input_color}
+        value={themeColor}
         onChange={(e) => handleSwitchThemeColor(e.target.value)}
       />
-      <datalist id="presetColors">
-        <option>#842ce9</option>
-        <option>#4946ff</option>
-        <option>#006afe</option>
-        <option>#36c991</option>
-        <option>#d14bec</option>
-        <option>#d572ab</option>
-        <option>#F46036</option>
-        <option>#E3D888</option>
-        <option>#bf8e80</option>
-        <option>#5d8985</option>
+      <datalist id="color-palette" className={switcherCSS.color_palette}>
+        {COLOR_PALETTE.map((color, i) => (
+          <option key={i}>{color}</option>
+        ))}
       </datalist>
     </>
   );

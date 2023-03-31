@@ -36,7 +36,7 @@
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  z-index: 10;
+  z-index: 100;
   // visibility: hidden;
   // opacity: 0;
   // transition: opacity 0.2s ease;
@@ -88,7 +88,7 @@
       display: grid;
       place-items: center;
       background-color: let(form-bg-200);
-      color: let(gray);
+      color: let(mute);
 
       img {
         width: 100%;
@@ -201,7 +201,7 @@
       .desc {
         font-size: 15px;
         line-height: 1.4;
-        color: var(--gray);
+        color: var(--mute);
       }
       .btns-container {
         display: flex;
@@ -249,11 +249,11 @@
   background-color: var(--bg);
   color: var(--text);
   display: grid;
-  height: 100vh;
-  place-items: center;
+  justify-content: center;
   align-items: start;
-  padding-top: 10rem;
   text-align: center;
+  padding-top: 5rem;
+
   &-container {
     display: grid;
     place-items: center;
@@ -281,11 +281,9 @@
       margin-top: 2em;
     }
     .subdescription {
-      margin-top: 100px;
+      margin-top: 30px;
       color: gray;
       font-size: 13px;
-      position: absolute;
-      bottom: 100px;
       text-transform: auto;
     }
   }
@@ -381,7 +379,7 @@ html:has(dialog[open][modal-mode='mega']) {
       z-index: var(--layer-1);
       padding-inline: var(--size-5);
       padding-block: var(--size-3);
-      background: let(bg-400);
+      background: let(bg-200);
       &::-webkit-scrollbar {
         background: var(--surface-1);
       }

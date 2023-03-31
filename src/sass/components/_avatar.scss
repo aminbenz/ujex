@@ -3,21 +3,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
   padding: 10px;
   border-radius: 10px;
-  margin-right: 20px;
   cursor: pointer;
   // @extend %hover-effect;
 
   &:hover {
-    background: let(bg-400);
+    background: let(bg-200);
   }
 
   .avatar {
     width: 35px;
     height: 35px;
-    margin-right: 10px;
-    background: let(bg-400);
+    background: let(bg-200);
     border-radius: let(radius-full);
 
     border: 1px solid let(border);

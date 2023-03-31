@@ -3,53 +3,77 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { IoCloseOutline, IoImagesOutline } from 'react-icons/io5';
 
-import { Button, Input } from '../../../../components';
-import { selectImageFile } from '../../../../helpers';
+import { Button, CheckBox, Input } from '../../../../components';
+import { selectImageFile } from '../../../../helper';
+import { Spotify } from '../../../../lib/spotify';
 
-interface Props {
+interface ModalProps {
+  show: boolean;
+  title?: string;
+  openModal?: string;
+  type?: 'create' | 'edit';
   name?: string;
   description?: string;
   public?: boolean;
-  image?: any;
+  image?: string;
 }
 
-interface ModalProps {
-  show?: boolean;
-  title?: string;
-  closeModal?: any;
-  isEditModal?: boolean;
-  setIsEditModal?: any;
-  type?: 'create' | 'edit';
-  data: Props;
-}
-
-export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
+export const Modal = ({
+  show,
+  title,
+  type = 'create',
+  getFormData,
+  // closeModal,
+  openModal,
+}: ModalProps) => {
   const [open, setOpen] = useState(show);
-  const [formData, setFormData] = useState<Props>({
+  const [formData, setFormData] = useState({
     name: '',
     description: '',
     public: false,
     image: '',
   });
   const inputRef = useRef(null);
+  const dialogRef = useRef(null);
 
-  // if is "Edit" so set Selected formData Data
+  useEffect(() => {
+    // if (type === 'edit') setFormData(data);
+  }, [type]);
 
-  // formData SUBMIT
-  const handleSubmit = (e: any) => {
+  // const getFormData = () => {
+  //   return {
+  //     name: form.get('name'),
+  //     description: form.get('description'),
+  //     public: form.get('status'),
+  //     image: form.get('image'),
+  //   };
+  // };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // if formData name Existing and isedit "false" => "CREATE"
-    if (formData.name && !isEditModal) {
-      closeModal();
-    }
 
-    // if formData name Existing and isedit "true" => "EDIT"
-    else if (formData.name && isEditModal) {
-      closeModal();
-    }
+    const form = new FormData(e.target as HTMLFormElement);
 
-    // if formData name "not" Existing display alert
-    else {
+    if (!form.get('name')) return;
+
+    if (type === 'create') {
+      // Create a private playlist
+      Spotify.createPlaylist(form.get('name'), {
+        description: form.get('description'),
+        public: true,
+      }).then(
+        function (data) {
+          console.log('Created playlist!');
+        },
+        function (err) {
+          console.log('Something went wrong!', err);
+        }
+      );
+
+      closeModal();
+    } else if (type === 'edit') {
+      closeModal();
+    } else {
       // displayAlert(true, 'please fill data', 'danger');
     }
   };
@@ -69,8 +93,8 @@ export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
     setOpen(false);
   };
 
-  let closeModalWhenClickOuteSide = (e: any) => {
-    if (e.target.classList.contains('popup')) {
+  let clickOutsideModal = () => {
+    if (dialogRef?.current.target.classList.contains('popup')) {
       closeModal();
     }
   };
@@ -85,13 +109,8 @@ export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
     setFormData({ ...formData, image: image });
   };
 
-  useEffect(() => {
-    if (isEditModal || type === 'edit') setFormData(data);
-  }, [isEditModal, type, data]);
-
   return (
     <AnimatePresence>
-      <Button onClick={() => setOpen(true)}>Open Modal</Button>
       {open && (
         <motion.dialog
           initial={{ opacity: 0 }}
@@ -99,7 +118,8 @@ export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
           transition={{ duration: 0.2 }}
           exit={{ opacity: 0 }}
           className={`form-dialog`}
-          onClick={closeModalWhenClickOuteSide}
+          onClick={clickOutsideModal}
+          ref={dialogRef}
         >
           <motion.div
             initial={{ y: '-100vh', opacity: 0 }}
@@ -114,7 +134,7 @@ export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
             className={`form-dialog-container`}
           >
             <div className="center">
-              <h4 className="title">{title || type || 'Change Me'}</h4>
+              <h4 className="title">{title || type}</h4>
               <button className="icon" title="Close" onClick={closeModal}>
                 <IoCloseOutline />
               </button>
@@ -122,6 +142,7 @@ export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
             {/* {alert.show && <Alert removeAlert={displayAlert} {...alert} />} */}
             <form method="dialog" onSubmit={handleSubmit}>
               <div className="img-container" onClick={(e) => selectImage(e)}>
+                {/* Choose Image */}
                 {formData.image && (
                   <>
                     <Image
@@ -143,6 +164,7 @@ export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
                 <IoImagesOutline className="bunner" />
                 <span className="msg">Choose image</span>
                 <input
+                  name="image"
                   ref={inputRef}
                   onChange={selectImage}
                   type="file"
@@ -150,34 +172,37 @@ export const Modal = ({ show, title, data, isEditModal, type }: ModalProps) => {
                   hidden
                 />
               </div>
-
+              {/* right Inputs */}
               <div className="right">
                 <Input
+                  name="name"
                   required={true}
                   minLength={3}
                   maxLength={30}
                   label="name"
                   placeholder="My Playlist #name.."
-                  value={formData.name}
-                  onChange={(e: any) => {
-                    setFormData({ ...formData, name: e.target.value });
-                  }}
                 />
                 <Input
+                  name="description"
                   label="description"
                   placeholder="Give your playlist descreption."
                   type="textarea"
-                  value={formData.description}
                   height={115}
-                  onChange={(e: any) => {
-                    setFormData({ ...formData, description: e.target.value });
-                  }}
+
                   // rows={4}
                   // cols={50}
                 />
-                {/* <CheckBox description="your playlist staus it's" check={true} /> */}
-                <Button size="sm" style={{ padding: '6px', width: 120 }}>
-                  {isEditModal ? 'Edit' : 'Create'}
+                <CheckBox
+                  name="status"
+                  description="your playlist staus it's"
+                  check={true}
+                />
+                <Button
+                  size="sm"
+                  type="submit"
+                  style={{ padding: '6px', width: 120 }}
+                >
+                  {type === 'edit' ? 'Edit' : 'Create'}
                 </Button>
               </div>
             </form>

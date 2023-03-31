@@ -43,7 +43,7 @@
   //disbled Button
   &:disabled {
     background-color: let(text) !important;
-    color: let(gray) !important;
+    color: let(mute) !important;
     opacity: 0.8;
     cursor: not-allowed;
   }
@@ -52,6 +52,14 @@
 //--------------  default button
 .btn {
   @extend %btn;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  justify-content: center;
+  display: flex;
 }
 
 @each $key, $value in $colors {
@@ -113,7 +121,7 @@
   }
 
   &:hover {
-    background-color: let(bg-400);
+    background-color: let(bg-200);
   }
 }
 

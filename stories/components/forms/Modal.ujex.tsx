@@ -20,19 +20,16 @@ const Template: ComponentStory<typeof Modal> = (args) => (
 
 export const Create = Template.bind({});
 Create.args = {
-  show: false,
+  show: true,
   title: 'Create Playlist',
 };
 
 export const Edit = Template.bind({});
 Edit.args = {
-  show: false,
-  isEditModal: true,
+  show: true,
   type: 'edit',
-  data: {
-    name: 'my playlist name',
-    description: 'my playlist description',
-    public: false,
-    image: 'https://i.scdn.co/image/ab67706f00000003ec69f78942a99131ab104df5',
-  },
+  name: 'my playlist name',
+  description: 'my playlist description',
+  public: false,
+  image: 'https://i.scdn.co/image/ab67706f00000003ec69f78942a99131ab104df5',
 };

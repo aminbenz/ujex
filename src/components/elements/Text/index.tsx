@@ -23,7 +23,7 @@ type PolymorphicComponentPropWithRef<
 
 type TextProps<C extends React.ElementType> = PolymorphicComponentPropWithRef<
   C,
-  { color?: Color; size: Size }
+  { color?: Color; size?: Size; font?: number; type?: string }
 >;
 
 type Component = <C extends React.ElementType = 'span'>(
@@ -33,15 +33,25 @@ type Component = <C extends React.ElementType = 'span'>(
 // eslint-disable-next-line react/display-name
 export const Text: Component = React.forwardRef(
   <C extends React.ElementType = 'span'>(
-    { as, color, children }: TextProps<C>,
+    { as, color, children, type, font, style, ...rest }: TextProps<C>,
     ref?: PolymorphicRef<C>
   ) => {
     const Component = as || 'span';
 
-    const style = color ? { style: { color } } : {};
+    const styles = {
+      style: {
+        fontWeight: font,
+        ...style,
+      },
+    };
 
     return (
-      <Component {...style} ref={ref}>
+      <Component
+        className={`text ${color === 'gradient' && 'gradient'}`}
+        ref={ref}
+        {...styles}
+        {...rest}
+      >
         {children}
       </Component>
     );

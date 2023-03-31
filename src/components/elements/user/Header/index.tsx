@@ -1,28 +1,22 @@
 import Image from 'next/image';
 
 interface UserProps {
-  display_name: string;
+  name: string;
   avatar?: string;
   type?: string;
   style?: any;
 }
 
-export const UserHeader = ({
-  display_name,
-  avatar,
-  type,
-  ...rest
-}: UserProps) => {
+// https://cdn4.iconfinder.com/data/icons/man-6/48/man-03-512.png
+
+export const UserHeader = ({ name, avatar, type, ...rest }: UserProps) => {
   return (
     <div className="user-header" {...rest}>
       <div className="image-container">
         <Image
           height={100}
           width={100}
-          src={
-            avatar ||
-            'https://cdn4.iconfinder.com/data/icons/man-6/48/man-03-512.png'
-          }
+          src={avatar || ''}
           alt="user avatar image"
         />
       </div>
@@ -32,7 +26,7 @@ export const UserHeader = ({
             <h4>{type}</h4>
           </div>
         )}
-        <h2 className="username">{display_name}</h2>
+        <h2 className="username">{name}</h2>
         <button className="icon" aria-label="edit">
           <svg
             stroke="currentColor"

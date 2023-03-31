@@ -7,7 +7,14 @@
 //   bg?: string;
 // };
 
-type CardProps = {
+// padding = p  - pl pr px py ..
+// margin = m
+// container
+//   direction="row"
+//   justifyContent="center"
+//   alignItems="center"
+
+type GridProps = {
   gap?: number | string;
   bg?: string;
   cardBg?: string;
@@ -15,16 +22,18 @@ type CardProps = {
   children: React.ReactNode;
   cols?: number;
   style?: React.CSSProperties;
+  type?: 'carousel' | 'default';
 };
 
-export const Grid: React.FC<CardProps> = ({
+export const Grid = ({
   gap,
   bg,
   text,
   children,
   style,
   cols,
-}) => {
+  type,
+}: GridProps) => {
   const styles = {
     style: {
       gap,
@@ -35,9 +44,32 @@ export const Grid: React.FC<CardProps> = ({
     },
   };
 
-  return (
-    <div className={`grid`} {...styles}>
-      {children}
-    </div>
-  );
+  if (
+    type === 'carousel' ? (
+      <div className={'carousel'}>
+        <div className={`grid`} {...styles}>
+          {children}
+        </div>
+      </div>
+    ) : (
+      <div className={`grid`} {...styles}>
+        {children}
+      </div>
+    )
+  )
+    return (
+      <>
+        {type === 'carousel' ? (
+          <div className={'carousel'}>
+            <div className={`grid`} {...styles}>
+              {children}
+            </div>
+          </div>
+        ) : (
+          <div className={`grid`} {...styles}>
+            {children}
+          </div>
+        )}
+      </>
+    );
 };

@@ -4,7 +4,7 @@
     color-scheme: dark;
     --bg: #{$bg};
     --bg-200: #{$bg-200};
-    --bg-400: #{$bg-400};
+    --bg-200: #{$bg-200};
     --bg-500: #{$bg-500};
 
     --text: #{$text};
@@ -17,7 +17,7 @@
     color-scheme: light;
     --bg: #f5f8fa;
     --bg-200: rgb(245, 245, 245);
-    --bg-400: #d1d4de;
+    --bg-200: #d1d4de;
     --bg-500: #d4d7e0;
 
     --text: #040405;
@@ -29,7 +29,7 @@
 [data-theme='light'] {
   --bg: #f5f8fa;
   --bg-200: rgb(245, 245, 245);
-  --bg-400: #d1d4de;
+  --bg-200: #d1d4de;
   --bg-500: #d4d7e0;
 
   --text: #040405;
@@ -39,7 +39,7 @@
 [data-theme='dark'] {
   --bg: #1a1a1d;
   --bg-200: #242428;
-  --bg-400: #242428;
+  --bg-200: #242428;
   --bg-500: #25282c;
 
   --text: #e1e1eb;

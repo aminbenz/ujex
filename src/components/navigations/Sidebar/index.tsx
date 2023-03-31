@@ -1,18 +1,20 @@
 //icons
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   IoAddOutline,
   IoBulbOutline,
   IoFolderOutline,
   IoHeartOutline,
 } from 'react-icons/io5';
-import { Input } from '../..';
+import { Input, Modal } from '../..';
 import { SearchIcon } from '../../../assets/icons';
 import { Skeleton } from './skeleton';
 
 interface PlaylistProps {
-  id: string;
+  id?: string;
   name: string;
-  title: string;
   href?: string;
 }
 
@@ -27,8 +29,10 @@ interface SidebarProps {
 }
 
 const library = [
-  { id: '1', title: 'Albums', name: 'albums' },
-  { id: '2', title: 'Liked Songs', name: 'liked_songs' },
+  // { id: '1', title: 'Albums', name: 'albums' },
+  { name: 'Liked songs', href: '/playlists/saved-tracks' },
+  { name: 'Top tracks', href: '/top/tracks' },
+  { name: 'Genres', href: '/genres' },
 ];
 // playlists example
 // const PLAYLISTS = [
@@ -39,9 +43,9 @@ const library = [
 // ];
 
 const smartPlaylists = [
-  { id: '1', title: 'Chill', name: 'chill' },
-  { id: '2', title: 'Electronick', name: 'electronick' },
-  { id: '3', title: 'For Home', name: 'for_home' },
+  { name: 'Top Lists', href: '/genres/toplists' },
+  { name: 'Chill', href: '/chill' },
+  { name: 'Radio', href: '/radio' },
 ];
 
 export const Sidebar = ({
@@ -53,6 +57,22 @@ export const Sidebar = ({
   loading = false,
   playlists,
 }: SidebarProps) => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const router = useRouter();
+
+  // search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchTerm) router.push('/search?q=' + searchTerm);
+      if (searchTerm === '') {
+        router.push('/');
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
   if (loading) {
     return <Skeleton />;
   }
@@ -68,28 +88,27 @@ export const Sidebar = ({
   };
 
   return (
-    <div {...styles} className={`sidebar ${loading && 'skeleton'}`}>
+    <aside {...styles} className={`sidebar ${loading && 'skeleton'}`}>
       <div className="sidebar-content">
         {/* Search form */}
         <Input
+          type="search"
           placeholder="Search..."
           leftIcon={<SearchIcon />}
           radius="md"
           height={30}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         {/* library */}
         <div className="links">
           <dl>
             <dt>
-              <a href="/your-library" className="link">
-                your <IoFolderOutline /> library
-              </a>
+              <IoFolderOutline />
+              <a href="/your-library">your library</a>
             </dt>
-            {library.map(({ id, name, title }: PlaylistProps) => (
-              <dd key={id}>
-                <a href={`/${name}`} className="link">
-                  {title}
-                </a>
+            {library.map(({ href, name }: PlaylistProps) => (
+              <dd key={name}>
+                <Link href={`${href}`}>{name}</Link>
               </dd>
             ))}
           </dl>
@@ -97,16 +116,13 @@ export const Sidebar = ({
           {/********* myPlaylists ********/}
           <dl>
             <dt>
-              <a href="/playlists" className="link">
-                <IoHeartOutline></IoHeartOutline> folder
-              </a>
+              <IoHeartOutline />
+              <a href="/playlists">folder</a>
             </dt>
-            {playlists?.map(({ id, name, title }: PlaylistProps) => {
+            {playlists?.map(({ id, name, href }: PlaylistProps) => {
               return (
                 <dd key={id}>
-                  <a className="link" href={`${name}`}>
-                    {title}
-                  </a>
+                  <Link href={`/${href || id || name}`}>{name}</Link>
                 </dd>
               );
             })}
@@ -115,19 +131,21 @@ export const Sidebar = ({
           {/* smartPlaylists */}
           <dl>
             <dt>
-              <a href="/Smart-Playlists" className="link">
-                <IoBulbOutline /> Smart Playlists
-              </a>
+              <IoBulbOutline />
+              <a href="/Smart-Playlists">Smart Playlists</a>
             </dt>
-            {smartPlaylists.map(({ id, name, title }: PlaylistProps) => {
+            {smartPlaylists.map(({ href, name }: PlaylistProps) => (
+              <dd key={name}>
+                <Link href={`${href}`}>{name}</Link>
+              </dd>
+            ))}
+            {/* {smartPlaylists.map(({ id, name, title, href }: PlaylistProps) => {
               return (
                 <dd key={id}>
-                  <a className="link" href={`${name}`}>
-                    {title}
-                  </a>
+                  <a href={`${name}`}>{title}</a>
                 </dd>
               );
-            })}
+            })} */}
           </dl>
         </div>
         {/* add playlist */}
@@ -135,7 +153,8 @@ export const Sidebar = ({
           <IoAddOutline />
           New Playlist
         </button>
+        <Modal show={isModalOpen} />
       </div>
-    </div>
+    </aside>
   );
 };

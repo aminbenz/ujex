@@ -6,7 +6,7 @@ form {
     padding: 0 15px;
     border: 1px solid #75757524;
     border-radius: 20px;
-    background: let(bg-400);
+    background: let(bg-200);
     width: inherit;
     color: inherit;
     outline: none;
@@ -58,7 +58,7 @@ label {
   //   }
 
   //   svg {
-  //     color: let(gray);
+  //     color: let(mute);
   //   }
 
   //   input,
@@ -67,7 +67,7 @@ label {
   //     // height: 100%;
   //     flex-grow: 1;
   //     &::placeholder {
-  //       color: let(gray);
+  //       color: let(mute);
   //     }
 
   //     &[type='checkbox'] {
@@ -104,7 +104,7 @@ label {
     }
 
     svg {
-      color: let(gray);
+      color: let(mute);
     }
 
     input,
@@ -113,7 +113,7 @@ label {
       all: unset;
       flex-grow: 1;
       &::placeholder {
-        color: let(gray);
+        color: let(mute);
       }
 
       &[type='checkbox'] {

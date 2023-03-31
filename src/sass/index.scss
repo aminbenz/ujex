@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 // Reset
-@import 'root/reset';
+@import 'base/reset';
 // variables & functions
 @import 'abstracts/variables';
 @import 'abstracts/colors';
@@ -9,28 +9,18 @@
 @import 'abstracts/breakpoints';
 // @import 'abstracts/fonts';
 //root
-@import 'root/root';
+@import 'base/root';
 //Utils (padding, margin, opacity, border)
 @import 'utils/utils';
 //Theme
 @import 'themes/theme';
 // Layout
-@import 'layout';
+@import 'layouts';
 // Components
-@import 'components/buttons';
-@import 'components/alert';
-@import 'components/avatar';
-@import 'components/dialog';
-@import 'components/card';
-@import 'components/track';
-@import 'components/modal';
-@import 'components/user-profile';
-@import 'components/forms';
-@import 'components/item';
+@import 'components';
 //sections
-@import 'sections/recenty_add';
 //pages
-// @import 'pages/home';
+@import 'pages/search';
 // @import 'pages/about';
 // @import 'pages/contact';
 
@@ -39,13 +29,23 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   // font-family :"Inter";
   background: let(bg);
+  background: radial-gradient(
+    circle,
+    #1a1a1d,
+    #1a1a1d,
+    #1a1a1d,
+    #1a1a1d,
+    #242428
+  );
   color: let(text);
 }
 
 ::placeholder {
   // color: lighten($color: $text, $amount: 20);
-  color: let(gray);
+  color: let(mute);
 }
+
+
 
 ::selection {
   background-color: let(primary);
@@ -63,7 +63,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-400);
+  background: var(--bg-200);
   border-radius: 3px;
 }
 
@@ -75,4 +75,23 @@ body {
 /* Track */
 ::-webkit-scrollbar-track {
   border-radius: 10px;
+}
+
+.pages {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+main:not(main.full) {
+  margin: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+._ {
+  overflow: hidden;
+}
+
+.container {
+  padding: 0 2rem;
 }

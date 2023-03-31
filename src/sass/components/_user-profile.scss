@@ -29,7 +29,7 @@
     .user-type > h4 {
       font-size: 14px;
       font-weight: 500;
-      color: let(gray);
+      color: let(mute);
     }
 
     .username {
@@ -51,25 +51,27 @@
 
 // tablist (smallnavlinks)
 .tablist {
-  color: let(gray);
+  color: let(mute);
 }
+
 .tablist-links {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px 10px;
-  margin-left: -20px;
-
+  gap: 10px;
+  margin: 20px 0px;
+  // margin-left: -20px;
   // gap: 10px;
 
-  a {
+  li {
+    color: inherit;
+    font-size: inherit;
     position: relative;
     text-transform: capitalize;
     padding: 10px 20px;
     cursor: pointer;
-    color: inherit;
     &:hover {
       color: let(text);
     }

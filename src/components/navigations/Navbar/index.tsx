@@ -41,10 +41,9 @@ export const Navbar = ({
   };
 
   return (
-    <nav className="navbar navbar-secondary" {...styles}>
+    <nav className="navbar navbar__secondary" {...styles}>
       <div className="logo-container">
         <Image height={40} width={100} src={brand || './logo.svg'} alt="logo" />
-        {/* <img src="./logo192.png" alt="logo" /> */}
       </div>
       <ul className="list">
         {list.map(({ title }: NavbarItemsProps, index: any) => (

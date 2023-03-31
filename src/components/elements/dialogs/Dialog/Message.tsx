@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { Button } from '../../..';
 // import './styles/styles.css';
 
 interface MessageProps {
+  logo?: string;
   logoSrc?: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   subdescription?: string;
   gap?: number;
   bg?: string;
@@ -20,6 +20,7 @@ export function Message({
   text,
   description,
   subdescription,
+  logo,
   logoSrc,
   button,
 }: MessageProps) {
@@ -28,9 +29,9 @@ export function Message({
   return (
     <section {...styles} className="message-dialog">
       <div className="message-dialog-container">
-        {logoSrc && (
+        {logo && (
           <div className="logo">
-            <Image height={80} width={80} src={logoSrc} alt="logo" />
+            <Image height={80} width={80} src={logo} alt="logo" />
           </div>
         )}
         <h2 className="title">{title}</h2>
@@ -39,14 +40,8 @@ export function Message({
           {description}
         </p> */}
         {description && <p className="description">{description}</p>}
+        {button && button}
         {subdescription && <p className="subdescription">{subdescription}</p>}
-        {button ? (
-          button
-        ) : (
-          <Button as="a" href={'/'} target={'_blank'}>
-            {'Home'}
-          </Button>
-        )}
       </div>
     </section>
   );

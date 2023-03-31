@@ -1,20 +1,20 @@
 import Link from 'next/link';
 
 interface ListProps {
-  title: string;
+  name: string;
   id?: string | number;
   href?: string;
   target?: string;
 }
 
 interface TablistProps {
-  list: ListProps[];
+  data: Array<ListProps>;
   bg?: string;
   text?: string;
   style?: any;
 }
 
-export const Tablist = ({ list, bg, text, style }: TablistProps) => {
+export const Tablist = ({ data, bg, text, style }: TablistProps) => {
   const styles = {
     style: {
       backgroundColor: bg,
@@ -26,11 +26,11 @@ export const Tablist = ({ list, bg, text, style }: TablistProps) => {
   return (
     <section {...styles} className="tablist">
       <ul className="tablist-links">
-        {list.map(({ id, href, title, target }, index) => {
+        {data.map(({ id, href, name, target }, index) => {
           return (
             <li key={id || index}>
-              <Link href={href || title} target={target}>
-                {title}
+              <Link href={href || name} target={target}>
+                {name}
               </Link>
             </li>
           );

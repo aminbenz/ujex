@@ -1,70 +1,152 @@
-import { IoEllipsisHorizontal, IoHeadset, IoHeartSharp } from 'react-icons/io5';
-
-interface Props {
-  id: string;
-  title: string;
-  uri: string;
-  name: string;
-  avatar: string;
-  album_name: string;
-  duration_ms: number | string;
-  added_at: number | string;
-}
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import {
+  IoHeartOutline,
+  IoHeartSharp,
+  IoPlayCircleOutline,
+} from 'react-icons/io5';
+import { millisToString } from '../../../helper';
+import { Spotify } from '../../../lib/spotify';
 
 interface TrackInterface {
-  data: Props;
+  id?: string;
+  name: string;
+  avatar?: string;
+  album_name?: string;
+  artist_name: string;
+  duration?: number;
+  added_at?: string | number;
+  uri?: string;
+  isLiked?: boolean;
+  order?: number;
+  height?: number | string;
+  width?: number | string;
+  text?: string;
+  bg?: string;
+  style?: React.CSSProperties;
+  fontSize?: number | string;
+  onClick?: any;
+  artistId: string;
 }
 
 export const Track: React.FC<TrackInterface> = ({
-  data: {
-    id,
-    title,
-    uri: audio,
-    name,
-    album_name,
-    duration_ms,
-    // added_at,
-  },
+  id,
+  uri,
+  name,
+  artist_name,
+  album_name,
+  order,
+  isLiked,
+  duration,
+  style,
+  height,
+  width,
+  text,
+  bg,
+  fontSize,
+  artistId,
+  added_at,
+  ...rest
 }) => {
   // when hove ron love btn in box make x on it
-  const handleLoveBtnMouseOver = (e: any) => {
-    e.target.classList.add('active');
+
+  const [liked, setLiked] = useState(isLiked);
+  const formatter = new Intl.DateTimeFormat('en', { month: 'short' });
+  const date = new Date(added_at);
+
+  const styles = {
+    style: {
+      backgroundColor: bg,
+      fontSize,
+      color: text,
+      width,
+      height,
+      ...style,
+    },
   };
-  const handleLoveBtnMouseLeave = (e: any) => {
-    e.target.classList.remove('active');
+
+  const containsMySavedTracks = async () => {
+    try {
+      const data = await Spotify.containsMySavedTracks([id]);
+      const trackIsInYourMusic = data.body[0];
+      if (trackIsInYourMusic) {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setLiked(false);
+    }
   };
+
+  useEffect(() => {
+    containsMySavedTracks();
+  }, [id]);
+
   return (
-    <div
-      className="box"
-      key={id}
-      onClick={() => {
-        console.log(id);
-      }}
-    >
-      {/* Play track Btn */}
-      <button className="play-track">
-        <IoHeadset />
-        {/* <IoPauseCircleOutline style={{ opacity: '0' }} /> */}
+    <div {...rest} className="box" {...styles}>
+      <button className="icon-love" aria-label="love">
+        {liked ? <IoHeartSharp /> : <IoHeartOutline />}
       </button>
-      {/* add to liked tracks Btn */}
-      <button
-        className="btn btn-love"
-        onMouseOver={handleLoveBtnMouseOver}
-        onMouseLeave={handleLoveBtnMouseLeave}
-      >
-        <IoHeartSharp />
-      </button>
-      <div className="content">
-        <span className="music_name likedlist">{title}</span>
-        <span className="name likedlist">{name}</span>
-        <span className="album_name likedlist">{album_name}</span>
-        {/* <span className="likedlist">{added_at?.split(' ')[0]}</span> */}
-        <span className="liskedlist">{duration_ms || '00 : 00'}</span>
-        <audio className="audio" src={`.${audio}`} />
-      </div>
-      <button className="btn btn-play">
-        <IoEllipsisHorizontal />
+      {order && <span className="order">{order}</span>}
+      <ul className="content">
+        <li>
+          <Link className="name" href={`/tracks/${artistId}`}>
+            {name}
+          </Link>
+        </li>
+
+        <li>
+          <Link className="name" href={`/artists/${artistId}`}>
+            {artist_name}
+          </Link>
+        </li>
+        <li>
+          <a className="name" href={`#`}>
+            {album_name}
+          </a>
+        </li>
+      </ul>
+      {added_at && (
+        <span className="added-at">{`${date.getUTCDate()} ${formatter.format(
+          date
+        )},  ${date.getUTCFullYear()}`}</span>
+      )}
+      {duration && <span className="duration">{millisToString(duration)}</span>}
+      <button className="icon-play" aria-label="play">
+        <IoPlayCircleOutline />
       </button>
     </div>
   );
+
+  // return (
+  //   <div className="box" key={id}>
+  //     {/* Play track Btn */}
+  //     <button aria-label="icon" className="play-track">
+  //       <IoHeadset />
+  //       {/* <IoPauseCircleOutline style={{ opacity: '0' }} /> */}
+  //     </button>
+  //     {/* add to liked tracks Btn */}
+  //     <button
+  //       aria-label="icon"
+  //       className="icon btn-love"
+  //       // onMouseOver={handleLoveBtnMouseOver}
+  //       // onMouseLeave={handleLoveBtnMouseLeave}
+  //     >
+  //       <IoHeartSharp />
+  //     </button>
+  //     <div className="content">
+  //       <span className="music_name likedlist">{name}</span>
+  //       <span className="name likedlist">{artist_name}</span>
+  //       <span className="album_name likedlist">{album_name}</span>
+  //       <span className="likedlist">{'2022-05-12' || duration_ms}</span>
+  //       <span className="liskedlist">{'3:12' || duration_ms}</span>
+  //       <audio className="audio" src={`${uri}`} />
+  //     </div>
+  //     <button aria-label="icon" className="icon btn-play">
+  //       <IoEllipsisHorizontal />
+  //     </button>
+  //   </div>
+  // );
 };

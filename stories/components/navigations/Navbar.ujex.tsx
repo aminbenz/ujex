@@ -89,12 +89,9 @@ Custom.args = {
 
 export const NavbarTwoLogin = Template2.bind({});
 NavbarTwoLogin.args = {
-  user: {
-    username: 'aminbenz',
-    display_name: 'Amin Benz',
-    avatar:
-      'https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg',
-  },
+  name: 'Amin Benz',
+  avatar:
+    'https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg',
   isAuthenticated: true,
 };
 

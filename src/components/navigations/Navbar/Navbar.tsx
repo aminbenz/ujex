@@ -1,10 +1,9 @@
-import { Button } from '../..';
-import { Avatar } from '../../elements/user/Avatar';
-
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Avatar, Button } from '../../';
 interface UserProps {
-  username: string;
-  display_name: string;
-  avatar: any;
+  name: string;
+  avatar: string;
 }
 
 interface LinkProps {
@@ -14,50 +13,66 @@ interface LinkProps {
 }
 
 interface NavbarProps {
-  links: LinkProps[];
-  user?: UserProps;
+  links?: LinkProps[];
+  id: string;
+  name: string;
+  avatar?: string;
   isAuthenticated?: boolean;
-  token?: string;
   logout?: () => void;
 }
 
-const menu = ['library', 'for you', 'browser', 'radio', 'store'];
+const navigation = [
+  { name: 'Home', href: '/' },
+  { name: 'for you', href: '/foryou' },
+  { name: 'Browser', href: '/browser' },
+  { name: 'radio', href: '/radio' },
+  { name: 'store', href: '/store' },
+];
 
 export const Navbar = ({
-  user,
+  id,
+  name,
+  avatar,
   isAuthenticated,
   logout,
   links,
 }: NavbarProps) => {
+  const router = useRouter();
+
   const Guest = () => (
     <div className="auth-btns btns">
       <Button color="light" radius="xs">
         Register
       </Button>
-      <Button radius="xs">Login</Button>
+      <Link href="/login">
+        <Button radius="xs">Login</Button>
+      </Link>
     </div>
   );
 
   return (
     <nav className="navbar">
       <div className="navbar-content">
-        {/* Search form */}
-        {/* <Input type="text" placeholder={'Search input'} /> */}
         <ul>
-          {/* <NavLinks /> */}
-          {menu.map((item, index) => (
-            <Button
-              key={index}
-              as="a"
-              size="sm"
-              className={`btn btn-primary-sm br-md ${index === 0 && 'active'}`}
-              href={'/' + item}
-            >
-              {item}
-            </Button>
+          {navigation.map(({ name, href }) => (
+            <Link key={href} href={href}>
+              <Button
+                size="sm"
+                bg={router.asPath === href ? '' : 'transparent'}
+                // className={`btn btn-primary-sm br-md ${
+                //   router.asPath === href && 'active'
+                // }`}
+              >
+                {name}
+              </Button>
+            </Link>
           ))}
         </ul>
-        {isAuthenticated ? <Avatar {...user} /> : <Guest />}
+        {isAuthenticated ? (
+          <Avatar id={id} name={name} avatar={avatar} />
+        ) : (
+          <Guest />
+        )}
       </div>
     </nav>
   );

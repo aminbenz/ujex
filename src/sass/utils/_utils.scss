@@ -186,15 +186,34 @@ $utilities: (
   }
 }
 
-.container {
-  // width: 100%;
-  // max-width: 1200px;
-  // margin: 0 auto;
-  // padding: 0 20px;
-  //old
-  width: 95%;
-  margin: auto;
-  padding: 1.8%;
+.br-full {
+  aspect-ratio: 1 / 1;
+  height: auto !important;
+}
+
+.br-full.image-container {
+  width: 85%;
+}
+
+.link {
+  color: let(gray);
+  text-decoration: underline;
+}
+
+.text.gradient {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  background: linear-gradient(to right, #4085e7 0%, #44c189 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  user-select: none;
+}
+
+.scroll {
+  max-height: calc(100vh - 100px);
+  overflow: auto;
 }
 
 .box {
@@ -202,6 +221,19 @@ $utilities: (
   border-radius: let(radius);
   display: flex;
   justify-content: center;
+}
+
+.image-container {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  // height: 120px;
+  overflow: hidden;
+}
+
+.shadow {
+  box-shadow: 1px 5px 10px 1px #0000002c;
 }
 
 // .container {
@@ -215,28 +247,54 @@ $utilities: (
 }
 
 .section-title {
-  // font-family: 'Poppins', -apple-system, system-ui, BlinkMacSystemFont,
-  //   'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-  //   sans-serif;
+  font-family: 'Poppins', -apple-system, system-ui, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  margin: 20px 0;
+  margin: 15px 0;
   border-bottom: 1px solid let(border);
-
-  .title {
-    font-size: 15px;
+  .name {
     font-weight: 600;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.2px;
   }
 
-  a {
-    font-size: 13px;
+  .select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
 
-    span {
-      font-weight: 500;
-      color: let(primary);
+    select {
+      border: none;
+      color: var(--primary);
+      // background: transparent;
+      // width: 70px;
+      height: 30px;
+      min-width: auto !important;
+      max-width: 150px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+    }
+  }
+
+  a,
+  select {
+    font-size: 13px;
+    font-weight: 500;
+
+    span,
+    option {
+      &:last-of-type:hover {
+        text-decoration: underline;
+      }
+      &:not(&:first-child) {
+        color: let(primary);
+      }
     }
   }
 }
